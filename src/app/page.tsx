@@ -1,65 +1,337 @@
-import Image from "next/image";
+"use client";
+import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Moon, Sun, Droplets, Dumbbell, Flame, CheckCircle2 } from 'lucide-react';
 
-export default function Home() {
+export default function FitnessRoutineChecklistApp() {
+  const [darkMode, setDarkMode] = useState(false);
+  const [water, setWater] = useState(0);
+  const [steps, setSteps] = useState(0);
+  const [weight, setWeight] = useState('92');
+  const [waist, setWaist] = useState('');
+  const [completed, setCompleted] = useState({});
+
+  const routine = [
+    {
+      time: '6:00 AM',
+      title: 'Wake Up & Hydration',
+      tasks: ['Drink 300–500ml water'],
+    },
+    {
+      time: '6:15 AM',
+      title: 'Detox Drink',
+      tasks: [
+        'Fenugreek seeds',
+        '100ml Storia coconut water',
+        'Turmeric root',
+        'Basil leaves',
+        'Mint leaves',
+        'Jeera',
+        'Ginger root',
+        'Quarter lemon',
+        '1 tsp honey',
+      ],
+    },
+    {
+      time: '6:40 AM',
+      title: 'ABC Juice',
+      tasks: [
+        '1 amla',
+        '1 carrot',
+        'Quarter beetroot',
+        'Quarter pomegranate',
+        'Mint leaves',
+        'Half lemon',
+        'Make pulp patty with oregano, chilli flakes & peri peri',
+      ],
+    },
+    {
+      time: '7:15 AM',
+      title: 'Gym Workout',
+      tasks: [
+        '30 mins treadmill incline walk',
+        '10 mins cross trainer',
+        'Strength training – 2 muscles',
+        '4 exercises',
+        '3 sets each',
+        'Compound lifts 8–12 reps',
+        'Isolation lifts 12–15 reps',
+        'Drink 750ml water + 5g creatine',
+      ],
+    },
+    {
+      time: '8:45 AM',
+      title: 'Post Workout',
+      tasks: ['1 scoop whey protein'],
+    },
+    {
+      time: '9:15 AM',
+      title: 'Breakfast',
+      tasks: [
+        '60g Pintola chocolate oats',
+        '3 tbsp Greek yogurt',
+        '5g chia seeds',
+        '5g pumpkin seeds',
+        '5g flax seeds',
+        'ABC pulp patty',
+      ],
+    },
+    {
+      time: '11:30 AM',
+      title: 'Mid-Morning Snack',
+      tasks: ['1 guava or 1 orange'],
+    },
+    {
+      time: '1:30 PM',
+      title: 'Lunch',
+      tasks: [
+        '3 bajra roti',
+        '150ml curd',
+        '100g mixed vegetables',
+        '1 bowl sambar',
+      ],
+    },
+    {
+      time: '4:30 PM',
+      title: 'Hydration',
+      tasks: ['Drink water', 'Optional lemon + salt water'],
+    },
+    {
+      time: '6:00 PM',
+      title: 'Evening Snack',
+      tasks: [
+        '2 whole boiled eggs',
+        '2 egg whites',
+        'Salt & chilli powder',
+      ],
+    },
+    {
+      time: '8:30 PM',
+      title: 'Dinner',
+      tasks: [
+        '220g chicken breast',
+        '250g vegetables',
+        '1 tsp olive oil',
+        '5g white sesame seeds',
+        'Oregano & chilli flakes',
+        'Air fry properly',
+      ],
+    },
+    {
+      time: '9:30 PM',
+      title: 'Recovery',
+      tasks: [
+        '5–10 mins stretching',
+        'Reduce screen brightness',
+        'Hydrate properly',
+      ],
+    },
+    {
+      time: '10:00 PM',
+      title: 'Sleep',
+      tasks: ['Sleep 7.5–8 hours'],
+    },
+  ];
+
+  const totalTasks = routine.reduce((acc, item) => acc + item.tasks.length, 0);
+  const completedTasks = Object.values(completed).filter(Boolean).length;
+  const progress = Math.round((completedTasks / totalTasks) * 100);
+
+  const toggleTask = (key) => {
+    setCompleted((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className={`${darkMode ? 'bg-black text-white' : 'bg-gray-100 text-black'} min-h-screen p-6 transition-all`}>
+      <div className="max-w-6xl mx-auto space-y-6">
+
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-4xl font-bold">Fitness Transformation Dashboard</h1>
+            <p className="text-lg opacity-70 mt-2">92kg → 80kg Fat Loss & Muscle Retention Plan</p>
+          </div>
+
+          <Button
+            onClick={() => setDarkMode(!darkMode)}
+            className="rounded-2xl"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </Button>
         </div>
-      </main>
+
+        <div className="grid md:grid-cols-4 gap-4">
+          <Card className="rounded-3xl shadow-xl">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <CheckCircle2 />
+                <h2 className="font-semibold text-lg">Daily Progress</h2>
+              </div>
+              <Progress value={progress} className="mb-3" />
+              <p>{progress}% Completed</p>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-3xl shadow-xl">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <Droplets />
+                <h2 className="font-semibold text-lg">Water Intake</h2>
+              </div>
+              <Input
+                placeholder="Liters consumed"
+                value={water}
+                onChange={(e) => setWater(e.target.value)}
+              />
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-3xl shadow-xl">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <Flame />
+                <h2 className="font-semibold text-lg">Daily Steps</h2>
+              </div>
+              <Input
+                placeholder="Steps walked"
+                value={steps}
+                onChange={(e) => setSteps(e.target.value)}
+              />
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-3xl shadow-xl">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <Dumbbell />
+                <h2 className="font-semibold text-lg">Body Tracking</h2>
+              </div>
+
+              <div className="space-y-2">
+                <Input
+                  placeholder="Weight (kg)"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                />
+
+                <Input
+                  placeholder="Waist (cm)"
+                  value={waist}
+                  onChange={(e) => setWaist(e.target.value)}
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <Card className="rounded-3xl shadow-xl">
+          <CardContent className="p-6">
+            <h2 className="text-2xl font-bold mb-4">Nutrition Dashboard</h2>
+
+            <div className="grid md:grid-cols-5 gap-4 text-center">
+              <div className="bg-gray-100 rounded-2xl p-4">
+                <h3 className="font-bold text-xl">Calories</h3>
+                <p>1850–2050 kcal</p>
+              </div>
+
+              <div className="bg-gray-100 rounded-2xl p-4">
+                <h3 className="font-bold text-xl">Protein</h3>
+                <p>135–155g</p>
+              </div>
+
+              <div className="bg-gray-100 rounded-2xl p-4">
+                <h3 className="font-bold text-xl">Carbs</h3>
+                <p>150–175g</p>
+              </div>
+
+              <div className="bg-gray-100 rounded-2xl p-4">
+                <h3 className="font-bold text-xl">Fiber</h3>
+                <p>40–50g</p>
+              </div>
+
+              <div className="bg-gray-100 rounded-2xl p-4">
+                <h3 className="font-bold text-xl">Fat</h3>
+                <p>50–60g</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="space-y-6">
+          {routine.map((item, index) => (
+            <Card key={index} className="rounded-3xl shadow-xl">
+              <CardContent className="p-6">
+                <div className="flex justify-between items-center mb-5">
+                  <div>
+                    <h2 className="text-2xl font-bold">{item.title}</h2>
+                    <p className="opacity-70 text-lg">{item.time}</p>
+                  </div>
+
+                  <div className="text-3xl">✅</div>
+                </div>
+
+                <div className="space-y-3">
+                  {item.tasks.map((task, taskIndex) => {
+                    const taskKey = `${index}-${taskIndex}`;
+
+                    return (
+                      <label
+                        key={taskIndex}
+                        className={`flex items-center gap-4 rounded-2xl p-4 cursor-pointer transition-all ${
+                          completed[taskKey]
+                            ? 'bg-green-100 line-through'
+                            : 'bg-gray-100 hover:bg-gray-200'
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={completed[taskKey] || false}
+                          onChange={() => toggleTask(taskKey)}
+                          className="w-5 h-5"
+                        />
+
+                        <span className="text-lg">{task}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <Card className="rounded-3xl shadow-xl">
+          <CardContent className="p-6">
+            <h2 className="text-2xl font-bold mb-4">Weekly Workout Split</h2>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              {[
+                'Monday – Chest + Triceps',
+                'Tuesday – Back + Biceps',
+                'Wednesday – Legs + Abs',
+                'Thursday – Shoulders + Triceps',
+                'Friday – Back + Biceps',
+                'Saturday – Legs + Core',
+                'Sunday – Active Recovery',
+              ].map((day, idx) => (
+                <div key={idx} className="bg-gray-100 rounded-2xl p-4 text-lg">
+                  {day}
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="text-center opacity-70 py-6">
+          Built for sustainable fat loss, muscle retention & long-term consistency.
+        </div>
+      </div>
     </div>
   );
 }
+
