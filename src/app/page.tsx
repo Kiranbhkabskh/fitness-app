@@ -12,7 +12,7 @@ export default function FitnessRoutineChecklistApp() {
   const [steps, setSteps] = useState(0);
   const [weight, setWeight] = useState('92');
   const [waist, setWaist] = useState('');
-  const [completed, setCompleted] = useState({});
+  const [completed, setCompleted] = useState<Record<string, boolean>>({});
 
   const routine = [
     {
