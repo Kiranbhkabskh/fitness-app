@@ -140,7 +140,7 @@ export default function FitnessRoutineChecklistApp() {
   const completedTasks = Object.values(completed).filter(Boolean).length;
   const progress = Math.round((completedTasks / totalTasks) * 100);
 
-  const toggleTask = (key) => {
+  const toggleTask = (key: string) => {
     setCompleted((prev) => ({
       ...prev,
       [key]: !prev[key],
